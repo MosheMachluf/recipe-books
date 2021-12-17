@@ -1,7 +1,7 @@
-nodemon
 .DS_Store
 node_modules
 /dist
+nodemon.json
 
 # local env files
 .env.local
