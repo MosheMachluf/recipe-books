@@ -1,0 +1,7 @@
+{
+  "env": {
+    "PORT": 4000,
+    "SECRET_KEY": "Pb&*6Opo5#8L6a@A*cj%45V8#ZQY0$!v",
+    "MONGO_URI": "mongodb+srv://moshe:wy4P6WGEN8ivMi2@cluster0.z5knw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+  }
+}
