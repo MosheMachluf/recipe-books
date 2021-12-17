@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 // const MONGO_URI = process.env.MONGO_URI || `mongodb://localhost:27017/recipets`;
-const MONGO_URI =
-  proccess.env.MONGO_URI || `mongodb://localhost:27017/recipets`;
+const MONGO_URI = process.env.MONGO_URI || `mongodb://localhost:27017/recipets`;
 mongoose
   .connect(MONGO_URI, {
     useUnifiedTopology: true,
