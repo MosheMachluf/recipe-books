@@ -57,7 +57,6 @@ class UsersController {
       // return the new user without the password
       // return res.send(_.omit(user._doc, ["password", "updatedAt"]));
       let token = user.generateJWT();
-      console.log(token);
       return res.json({
         success: 1,
         message: "User created successfully.",
