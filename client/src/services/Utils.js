@@ -14,7 +14,7 @@ class Utils {
   }
 
   static getApiUrl() {
-    return "http://localhost:4000/api/";
+    return "/api/";
   }
 }
 
