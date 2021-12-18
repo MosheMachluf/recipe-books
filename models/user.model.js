@@ -29,7 +29,7 @@ userSchema.methods.generateJWT = function () {
   // { expiresIn: '1h' }
   const token = JWT.sign(
     _.omit(this._doc, ["password", "__v"]),
-    process.env.SECRET_KEY
+    process.env.SECRET_KEY || "secret_key"
   );
   return token;
 };
