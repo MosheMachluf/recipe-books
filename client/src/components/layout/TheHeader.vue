@@ -18,6 +18,12 @@
       <v-btn v-if="isLoggedIn" color="black" depressed @click="logout">
         התנתק
       </v-btn>
+      <template v-else>
+        <v-btn color="black" class="ml-2" depressed :to="{ name: 'Login' }">
+          התחבר
+        </v-btn>
+        <v-btn color="black" depressed :to="{ name: 'Signup' }"> הרשם </v-btn>
+      </template>
     </v-toolbar>
   </v-card>
 </template>

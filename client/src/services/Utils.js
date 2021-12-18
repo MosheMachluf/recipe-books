@@ -14,7 +14,10 @@ class Utils {
   }
 
   static getApiUrl() {
-    return "/api/";
+    if (process.env.NODE_ENV == "production") {
+      return "/api/";
+    }
+    return "http://localhost:4000/api/";
   }
 }
 
