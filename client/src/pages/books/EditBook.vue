@@ -65,6 +65,7 @@
 </template>
 
 <script>
+
 export default {
   data: () => ({
     isLoading: false,
@@ -76,10 +77,14 @@ export default {
       image: null,
     },
     previewImageLoaded: false,
-    changesSaved: false,
+    formSubmitted: false,
   }),
 
   computed: {
+    formChanged( ) {
+      const currentBook = this.$store.getters["books/currentBook"];
+      return Object.keys(this.book).some(field => this.book[field] !== currentBook[field]);
+    },
     bookId() {
       return this.$route.params.bookId;
     },
@@ -98,13 +103,13 @@ export default {
   },
 
   beforeRouteLeave(to, from, next) {
-    if (this.changesSaved) {
-      next();
+    if (this.formChanged && !this.formSubmitted) {
+      const confirmedToLeave = confirm("בטוח שברצונך לעזוב? שינויים לא נשמרו");
+      next(confirmedToLeave);
       return;
     }
 
-    const confirmedToLeave = confirm("בטוח שברצונך לעזוב? שינויים לא נשמרו");
-    next(confirmedToLeave);
+    next();
   },
   async created() {
     const currentUserId = localStorage.getItem("userId");
@@ -113,8 +118,7 @@ export default {
     const theBook = this.$store.getters["books/currentBook"];
 
     if (currentUserId !== theBook.userId._id) {
-      this.changesSaved = true;
-      this.$router.replace({ name: "Book", params: { bookId: this.bookId } });
+      await this.$router.replace({ name: "Book", params: { bookId: this.bookId } });
       return;
     }
 
@@ -132,6 +136,8 @@ export default {
     },
 
     async submitForm() {
+      this.formSubmitted = true;
+
       if (!this.$refs.form.validate()) {
         return;
       }
@@ -142,7 +148,7 @@ export default {
           ...this.book,
           bookId: this.bookId,
         });
-        this.$router.replace({ name: "Book", params: { bookId: this.bookId } });
+        await this.$router.replace({ name: "Book", params: { bookId: this.bookId } });
       } catch (error) {
         this.error = error.message;
       }

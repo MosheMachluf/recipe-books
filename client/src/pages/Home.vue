@@ -10,7 +10,7 @@
     <v-col cols="12" v-for="book in allBooks" :key="book._id">
       <book-item
         :id="book._id"
-        :image="book.image"
+        :image="book.image || require('@/assets/recipe-placeholder.webp')"
         :title="book.title"
         :desc="book.description"
         :created="book.createdAt"

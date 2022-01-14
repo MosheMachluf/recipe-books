@@ -11,7 +11,7 @@
         <strong>{{ userName }}</strong>
       </h2> -->
 
-      <v-toolbar-title v-html="pageTitle"> </v-toolbar-title>
+      <v-toolbar-title v-html="pageTitle"></v-toolbar-title>
 
       <v-spacer></v-spacer>
 
@@ -49,7 +49,7 @@ export default {
     pageTitle() {
       return (
         this.$route.meta?.title ||
-        `<span>ערב טוב, </span><strong>${this.userName}</strong>`
+        `<span>${this.greetingText()}, </span><strong>${this.userName}</strong>`
       );
     },
   },
@@ -63,6 +63,36 @@ export default {
       this.$store.dispatch("auth/logout");
       this.$router.replace("/login");
     },
+
+    greetingText() {
+      const now = new Date();
+      const hour = now.getHours();
+      const day = now.getDay() + 1;
+
+      switch (true) {
+        case (hour >= 6 && hour < 12):
+          return 'בוקר טוב';
+
+        case (hour >= 12 && hour < 17):
+          return 'צהריים טובים';
+
+        case (hour >= 17):
+
+          if (day === 5) {
+            return 'חמישי שמח';
+          }
+
+          if (day === 6) {
+            return 'שבת שלום';
+          }
+
+          return 'ערב טוב';
+
+        case (hour >= 22 && hour < 6):
+          return 'לילה טוב';
+      }
+
+    }
   },
 };
 </script>

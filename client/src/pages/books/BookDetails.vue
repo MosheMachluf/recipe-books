@@ -2,8 +2,8 @@
   <card-loading v-if="isLoading"></card-loading>
   <v-card v-else-if="book" min-height="75vh" rounded="lg">
     <v-img
-      :src="book.image"
-      :lazy-src="book.image"
+      :src="book.image || require('@/assets/recipe-placeholder.webp')"
+      :lazy-src="book.image || require('@/assets/recipe-placeholder.webp')"
       height="200px"
       class="white--text align-end"
       gradient="to top, rgba(0, 0, 0, 0.7) 20%, transparent 70%"
@@ -20,7 +20,7 @@
       {{ book.description }}
     </v-card-text>
 
-    <v-expansion-panels flat tile :value="0">
+    <v-expansion-panels flat tile :value="0" v-if="hasRecipes">
       <v-expansion-panel>
         <v-expansion-panel-header> תוכן עניינים: </v-expansion-panel-header>
         <v-expansion-panel-content v-for="recipe in recipes" :key="recipe._id">
@@ -31,10 +31,15 @@
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
+    <v-card-text v-else>
+      עדיין אין מתכונים בספר
+    </v-card-text>
+
     <v-divider></v-divider>
 
     <v-card-actions class="justify-center my-5 flex-wrap">
       <v-btn
+        v-if="hasRecipes"
         :to="recipesLink"
         color="success"
         min-width="150px"
@@ -47,24 +52,38 @@
           המשך למתכונים
         </span>
       </v-btn>
-
-      <v-btn v-if="isUserBook" :to="addRecipeLink" depressed>
-        <v-icon>mdi-plus</v-icon>
-      </v-btn>
-
-      <v-btn v-if="isUserBook" :to="editBookLink" depressed>
-        <v-icon>mdi-pencil</v-icon>
-      </v-btn>
-
       <v-btn
-        v-if="isUserBook"
-        color="error"
-        outlined
-        @click="deleteBook"
-        depressed
+          v-else-if="isUserBook"
+          :to="addRecipeLink"
+          color="success"
+          min-width="150px"
+          large
+          depressed
+          block
+          class="mb-3"
       >
-        <v-icon>mdi-delete</v-icon>
+        <span class="font-weight-bold" style="font-size: 16px">
+          הוסף מתכון
+        </span>
       </v-btn>
+
+      <template v-if="isUserBook">
+        <v-btn v-if="hasRecipes" :to="addRecipeLink" depressed>
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
+        <v-btn :to="editBookLink" depressed>
+          <v-icon>mdi-pencil</v-icon>
+        </v-btn>
+        <v-btn
+            color="error"
+            outlined
+            @click="deleteBook"
+            depressed
+        >
+          <v-icon>mdi-delete</v-icon>
+        </v-btn>
+      </template>
+
     </v-card-actions>
   </v-card>
   <p v-else>לא נמצא ספר</p>
@@ -97,6 +116,10 @@ export default {
 
     recipes() {
       return this.$store.getters["books/bookRecipes"];
+    },
+
+    hasRecipes() {
+      return this.recipes && this.recipes.length > 0;
     },
 
     recipesLink() {
@@ -151,6 +174,7 @@ export default {
           await this.$store.dispatch("books/deleteBook", {
             bookId: this.bookId,
           });
+          await  this.$router.push({name:'MyBooks'});
         } catch (error) {
           this.error = error.message || "שגיאה, אנא נסה שוב מאוחר יותר";
         }

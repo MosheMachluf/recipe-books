@@ -21,7 +21,7 @@ const routes = [
       {
         name: "MyBooks",
         path: "my-books",
-        component: () => import("../pages/profile/EditProfile.vue"),
+        component: () => import("../pages/profile/MyBooks.vue"),
         meta: {
           requiresAuth: true,
         },
@@ -29,7 +29,7 @@ const routes = [
       {
         name: "MyFav",
         path: "my-fav",
-        component: () => import("../pages/profile/EditProfile.vue"),
+        component: () => import("../pages/profile/Favourites.vue"),
         meta: { requiresAuth: true },
       },
     ],
@@ -121,7 +121,6 @@ const routes = [
         component: () => import("../pages/recipes/RecipeDetails.vue"),
         meta: {
           showBackButton: true,
-          requiresAuth: true,
         },
       },
     ],

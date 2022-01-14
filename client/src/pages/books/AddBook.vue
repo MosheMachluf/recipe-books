@@ -61,6 +61,41 @@
         </div>
       </v-form>
     </v-card-text>
+
+
+    <v-dialog
+        v-model="dialog"
+        persistent
+        max-width="290"
+    >
+      <v-card>
+        <v-card-title class="text-h5">
+          לאן תרצה לעבור?
+        </v-card-title>
+        <v-card-text>הספר שלך נוצר בהצלחה! אנו ממליצים לך להתחיל להוסיף אליו מתכונים</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+              :to="{ name: 'Home' }"
+              depressed
+              style="min-width: 50%;"
+              @click="dialog = false"
+          >
+            חזור לדף הבית
+          </v-btn>
+          <v-btn
+              :to="{ name: 'AddBookRecipe', params: { bookId: newBookId } }"
+              color="primary"
+              depressed
+              style="min-width: 50%;"
+              @click="dialog = false"
+          >
+            הוסף מתכון
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
   </v-card>
 </template>
 
@@ -74,6 +109,8 @@ export default {
     description: null,
     image: null,
     previewImageLoaded: false,
+    dialog: false,
+    newBookId: null,
   }),
   watch: {
     image(currentValue) {
@@ -104,7 +141,9 @@ export default {
           image: this.image,
         };
         await this.$store.dispatch("books/createBook", payload);
-        this.$router.replace("/");
+        const newBook = this.$store.getters["books/newBookAdded"];
+        this.newBookId = newBook._id;
+        this.dialog = true;
       } catch (error) {
         this.error = error.message;
       }

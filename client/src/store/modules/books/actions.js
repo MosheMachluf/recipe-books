@@ -8,11 +8,6 @@ export default {
         Authorization: "Bearer " + context.rootGetters["auth/token"],
       },
     });
-
-    if (!res.ok) {
-      throw new Error(res.message || "שגיאה, אנא נסה שוב מאוחר יותר.");
-    }
-
     const resData = await res.json();
 
     context.commit("setMyBooks", resData);
@@ -78,13 +73,9 @@ export default {
       throw new Error("אין לך הרשאה");
     }
 
-    if (!res.ok) {
-      throw new Error(res.message || "שגיאה, אנא נסה שוב מאוחר יותר.");
-    }
+    const response = await res.json();
 
-    const resData = await res.json();
-
-    context.commit("addBook", resData.book);
+    context.commit("newBookAdded", response.book);
   },
 
   async updateBook(context, payload) {
@@ -120,18 +111,18 @@ export default {
 
   async deleteBook(context, payload) {
     const endpoint = `${Utils.getApiUrl()}books/${payload.bookId}`;
-    const res = await fetch(endpoint, { method: "DELETE" });
+    const res = await fetch(endpoint, { method: "DELETE" ,
+      headers: {
+        Authorization: "Bearer " + context.rootGetters["auth/token"],
+      },
+    });
 
     if (res.status == 401) {
       throw new Error("אין לך הרשאה");
     }
 
-    if (!res.ok) {
-      throw new Error(res.message || "שגיאה, אנא נסה שוב מאוחר יותר.");
-    }
-
     // const resData = await res.json();
 
-    // context.commit("updateBook", resData);
+    context.commit("deleteBook", payload.bookId);
   },
 };

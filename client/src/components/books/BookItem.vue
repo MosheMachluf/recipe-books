@@ -7,12 +7,12 @@
       class="white--text align-end"
       gradient="to top, rgba(0, 0, 0, 0.7) 20%, transparent 70%"
     >
-      <v-card-title> {{ title }} </v-card-title>
+      <v-card-title>{{ title }}</v-card-title>
     </v-img>
 
-    <v-card-subtitle> {{ date }} </v-card-subtitle>
+    <v-card-subtitle>{{ date }}</v-card-subtitle>
 
-    <v-card-text> {{ desc }} </v-card-text>
+    <v-card-text>{{ desc }}</v-card-text>
 
     <v-card-actions>
       <v-list-item class="grow">

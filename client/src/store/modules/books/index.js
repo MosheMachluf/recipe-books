@@ -10,6 +10,7 @@ export default {
       bookRecipes: null,
       myBooks: null,
       allBooks: null,
+      newBookAdded: null,
     };
   },
   mutations,

@@ -72,7 +72,7 @@
           clearable
         ></v-text-field>
 
-        <v-switch v-model="recipe.status" label="סטטוס"></v-switch>
+        <v-switch v-model="recipe.status" :label="statusLabel" disabled></v-switch>
 
         <v-text-field
           filled
@@ -163,6 +163,9 @@ export default {
         value: book._id,
       }));
     },
+    statusLabel() {
+      return this.recipe.status ? "ציבורי" : "פרטי";
+    },
   },
 
   watch: {
@@ -239,13 +242,11 @@ export default {
 
       this.isLoading = true;
 
-      let tags = "";
-      if (this.recipe.tags) {
+      let tags = [];
+      if (Array.isArray(this.recipe.tags) && this.recipe.tags.length > 0) {
         tags = this.recipe.tags;
-
-        if (!Array.isArray(this.recipe.tags)) {
-          tags = this.recipe.tags.split(",");
-        }
+      } else if (this.recipe.tags) {
+        tags = this.recipe.tags.split(",");
       }
 
       try {

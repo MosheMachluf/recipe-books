@@ -16,7 +16,16 @@ export default {
   },
 
   addBook(state, payload) {
-    state.allBooks = payload;
-    state.myBooks = payload;
+    state.allBooks.push(payload);
+    state.myBooks.push(payload);
   },
+
+  newBookAdded(state, payload) {
+    state.newBookAdded = payload;
+  },
+
+  deleteBook(state, bookId) {
+    state.allBooks = state.allBooks.filter(book => book._id !== bookId);
+    state.myBooks = state.myBooks.filter(book => book._id !== bookId);
+  }
 };

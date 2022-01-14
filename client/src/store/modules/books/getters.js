@@ -7,6 +7,14 @@ export default {
     return state.myBooks;
   },
 
+  hasMyBooks(state) {
+    return state.myBooks && state.myBooks.length > 0;
+  },
+
+  newBookAdded(state) {
+    return state.newBookAdded;
+  },
+
   bookRecipes(state) {
     return state.bookRecipes;
   },
