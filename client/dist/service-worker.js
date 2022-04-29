@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.5ae3767b1058a83e8a75b04d0a032222.js"
+  "/precache-manifest.53b9c40c1e44f756435d656eda0c258a.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "recipes-app"});
