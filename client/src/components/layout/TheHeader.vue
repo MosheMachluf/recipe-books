@@ -1,15 +1,10 @@
 <template>
   <!-- color: red accent-4 -->
   <v-card tile flat>
-    <v-toolbar color="primary" dark extended flat :height="headerHeight">
+    <v-toolbar color="orange" dark extended flat :height="headerHeight">
       <v-btn v-if="showBackButton" icon dark @click="backHistory">
         <v-icon> mdi-arrow-right </v-icon>
       </v-btn>
-
-      <!-- <h2>
-        <span>ערב טוב, </span>
-        <strong>{{ userName }}</strong>
-      </h2> -->
 
       <v-toolbar-title v-html="pageTitle"></v-toolbar-title>
 
